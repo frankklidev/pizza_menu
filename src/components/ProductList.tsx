@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 export interface Product {
   id: number;
   name: string;
   categoryId: number; // Relaciona cada producto con una categoría
-  price: string; // Precio del producto
+  price?: string; // Precio del producto
 }
 
 export interface Topping {
@@ -16,70 +16,113 @@ export interface Topping {
 interface ProductListProps {
   products: Product[];
   selectedCategoryId: number | null;
-  defaultCategoryId: number; // Nueva prop: ID de la primera categoría
-  toppings?: Topping[] | null; // Nueva prop: lista de toppings opcional
+  defaultCategoryId: number;
+  toppings?: Topping[] | null;
+  takeawayProducts?: { id: number; name: string; price: string }[]; // Productos para llevar
 }
 
 const ProductList: React.FC<ProductListProps> = ({
   products,
   selectedCategoryId,
   defaultCategoryId,
-  toppings = null, // Valor por defecto si no se pasa esta prop
+  toppings = null,
+  takeawayProducts = [],
 }) => {
-  const [currentCategoryId, setCurrentCategoryId] = useState<number | null>(null);
+  const currentCategoryId = selectedCategoryId ?? defaultCategoryId;
 
-  useEffect(() => {
-    // Si no hay una categoría seleccionada, usar la categoría por defecto
-    if (selectedCategoryId === null) {
-      setCurrentCategoryId(defaultCategoryId);
-    } else {
-      setCurrentCategoryId(selectedCategoryId);
-    }
-  }, [selectedCategoryId, defaultCategoryId]);
-
+  // Filtrar los productos según la categoría seleccionada
   const filteredProducts = currentCategoryId
     ? products.filter((product) => product.categoryId === currentCategoryId)
     : [];
 
+  const [isScrollable, setIsScrollable] = useState(false); // Estado para indicar si hay más elementos desplazables
+  const productsContainerRef = useRef<HTMLDivElement>(null); // Referencia al contenedor de productos
+
+  // Detectar si el contenedor tiene scroll
+  const handleScroll = () => {
+    const container = productsContainerRef.current;
+    if (container) {
+      const hasScroll = container.scrollHeight > container.clientHeight;
+      setIsScrollable(hasScroll);
+    }
+  };
+
   return (
     <div className="w-full py-4">
-      {/* <h2 className="text-2xl font-bold mb-4 text-center">Productos</h2> */}
-      <div className="flex flex-col gap-2 px-4">
+      {/* Lista de productos */}
+      <div
+        className="flex flex-col gap-4 px-4 max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
+        ref={productsContainerRef}
+        onScroll={handleScroll} // Detectar scroll
+        onLoad={handleScroll} // Verificar scroll inicial
+      >
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="flex items-center text-lg font-medium"
+              className="flex items-center justify-between text-lg font-medium p-4 bg-white rounded shadow-md hover:shadow-lg transition-shadow"
             >
-              {/* Nombre del producto */}
-              <span className="">{product.name}</span>
-              {/* Separador dinámico */}
-              <span className="flex-grow mx-2 border-t border-dashed border-gray-400"></span>
-              {/* Precio del producto */}
-              <span>{product.price}</span>
-              {/* Mostrar toppings si el producto es Pizza */}
-              {product.categoryId === 7 && toppings && (
-                <div className="mt-4">
-                  <h3 className="text-lg font-bold mb-2">Agregados Disponibles:</h3>
-                  <ul className="flex flex-col gap-2">
-                    {toppings.map((topping) => (
-                      <li
-                        key={topping.id}
-                        className="flex justify-between items-center bg-gray-50 p-2 rounded-lg shadow-sm"
-                      >
-                        <span>{topping.name}</span>
-                        <span className="text-gray-600">{topping.price}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <span className="line-clamp-2">{product.name}</span>
+              <span className="font-bold">{product.price}</span>
             </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">No hay productos disponibles.</p>
+          <p className="text-center text-gray-500">
+            No hay productos disponibles.
+          </p>
         )}
       </div>
+
+      {/* Indicador de scroll para productos */}
+      {isScrollable && (
+        <div className="flex justify-center items-center mt-2">
+          <span className="text-gray-500 text-sm animate-bounce">
+            Desplázate para ver más
+          </span>
+        </div>
+      )}
+
+      {/* Mostrar toppings si existen */}
+      {toppings && toppings.length > 0 && (
+        <div className="mt-6 px-4">
+          <h3 className="text-lg font-bold mb-2">Agregos Disponibles:</h3>
+          <div
+            className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
+            onScroll={handleScroll} // Detectar scroll
+          >
+            {toppings.map((topping) => (
+              <div
+                key={topping.id}
+                className="flex items-center justify-between text-lg font-medium p-4 bg-white rounded shadow-md hover:shadow-lg transition-shadow"
+              >
+                <span>{topping.name}</span>
+                <span className="font-bold">{topping.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Mostrar productos "Para Llevar" si es la categoría de Pizzas */}
+      {currentCategoryId === 7 && takeawayProducts.length > 0 && (
+        <div className="mt-6 px-4">
+          <h3 className="text-lg font-bold mb-2">Para Llevar:</h3>
+          <div
+            className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
+            onScroll={handleScroll} // Detectar scroll
+          >
+            {takeawayProducts.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between text-lg font-medium p-4 bg-white rounded shadow-md hover:shadow-lg transition-shadow"
+              >
+                <span>{item.name}</span>
+                <span className="font-bold">{item.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
