@@ -53,8 +53,8 @@ const ProductList: React.FC<ProductListProps> = ({
       <div
         className="flex flex-col gap-4 px-4 max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
         ref={productsContainerRef}
-        onScroll={handleScroll} // Detectar scroll
-        onLoad={handleScroll} // Verificar scroll inicial
+        onScroll={handleScroll}
+        onLoad={handleScroll}
       >
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
@@ -62,7 +62,7 @@ const ProductList: React.FC<ProductListProps> = ({
               key={product.id}
               className="flex items-center justify-between text-lg font-medium p-4 bg-white rounded shadow-md hover:shadow-lg transition-shadow"
             >
-              <span className="line-clamp-2">{product.name}</span>
+              <span className="line-clamp-3">{product.name}</span>
               <span className="font-bold">{product.price}</span>
             </div>
           ))
@@ -109,7 +109,7 @@ const ProductList: React.FC<ProductListProps> = ({
           <h3 className="text-lg font-bold mb-2">Para Llevar:</h3>
           <div
             className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
-            onScroll={handleScroll} // Detectar scroll
+            onScroll={handleScroll} 
           >
             {takeawayProducts.map((item) => (
               <div

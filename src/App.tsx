@@ -17,7 +17,7 @@ const products: Product[] = [
   { id: 1, name: "Expresso", categoryId: 1, price: "60 CUP" },
   { id: 2, name: "Cortado", categoryId: 1, price: "100 CUP" },
   { id: 3, name: "Capuchino", categoryId: 1, price: "150 CUP" },
-  { id: 4, name: "Bombón", categoryId: 1, price: "250 CUP" },
+  { id: 4, name: "Bombón", categoryId: 1, price: "260 CUP" },
 
   // Categoría: Té (ID: 2)
   { id: 11, name: "Espaguetis", categoryId: 2 },
@@ -32,7 +32,7 @@ const products: Product[] = [
   { id: 32, name: "Sándwich de Atún", categoryId: 4, price: "390 CUP" },
 
   // Categoría: Bebidas (ID: 6)
-  { id: 51, name: "Cerveza", categoryId: 6, price: "350 CUP" },
+  { id: 51, name: "Cerveza Nacional", categoryId: 6, price: "350 CUP" },
   { id: 52, name: "Energizante", categoryId: 6, price: "300 CUP" },
   { id: 53, name: "Malta", categoryId: 6, price: "280 CUP" },
   { id: 54, name: "Cerveza Importada", categoryId: 6, price: "250 CUP" },
@@ -41,28 +41,21 @@ const products: Product[] = [
   { id: 57, name: "Limonada Frappe", categoryId: 6, price: "280 CUP" },
   {
     id: 58,
-    name: "Limonada Frappe con Limón",
+    name: "Limonada Frescura con Hierba Buena",
     categoryId: 6,
-    price: "300 CUP",
+    price: "330 CUP",
   },
 
   // Categoría: Pizzas (ID: 7)
-  { id: 61, name: "Pizza Margarita", categoryId: 7, price: "800 CUP" },
+  { id: 61, name: "Pizza Napolitana", categoryId: 7, price: "800 CUP" },
 
   { id: 101, name: "Hamburguesa de Pollo", categoryId: 8, price: "460 CUP" },
   { id: 102, name: "Hamburguesa de Cerdo", categoryId: 8, price: "570 CUP" },
-  { id: 103, name: "Hamburguesa de Res", categoryId: 8, price: "570 CUP" },
-  {
-    id: 104,
-    name: "Hamburguesa Mixta(Res/Cerdo)",
-    categoryId: 8,
-    price: "570 CUP",
-  },
   {
     id: 105,
-    name: "Hamburguesa Especial MG (doble hamburguesa,gouda,jamon,vegetales,papas fritas y jarra de jugo)",
+    name: "Hamburguesa Especial MG (2 hamburguesas,queso,racion de papas y jarra de jugo)",
     categoryId: 8,
-    price: "570 CUP",
+    price: "1150 CUP",
   },
 ];
 
@@ -94,6 +87,11 @@ const takeawayProducts = [
   { id: 206, name: "Jabas", price: "10 CUP" },
 ];
 
+const hamburgerToppings = [
+  { id: 10, name: "Queso Extra", price: "120 CUP" },
+  { id: 11, name: "Tocineta", price: "150 CUP" },
+];
+
 const App: React.FC = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null
@@ -105,11 +103,13 @@ const App: React.FC = () => {
 
   // Determinar los toppings dinámicamente según la categoría seleccionada
   const currentToppings =
-    selectedCategoryId === 7
-      ? toppings // Toppings para pizzas
-      : selectedCategoryId === 2
-      ? spaghettiToppings // Toppings para espaguetis
-      : null;
+  selectedCategoryId === 7
+    ? toppings
+    : selectedCategoryId === 2
+    ? spaghettiToppings
+    : selectedCategoryId === 8
+    ? hamburgerToppings
+    : null;
 
   const currentTakeawayProducts =
     selectedCategoryId === 7 ? takeawayProducts : [];
