@@ -4,12 +4,13 @@ import Categories from "./components/Categories";
 import ProductList, { Product } from "./components/ProductList";
 
 const categories = [
-  { id: 1, name: "Café", icon: "☕" },
+  { id: 9, name: "Entrantes", icon: "🍟" },
+  { id: 7, name: "Pizzas", icon: "🍕" },
   { id: 2, name: "Espaguetis", icon: "🍝" },
   { id: 4, name: "Sandwiches", icon: "🥪" },
-  { id: 6, name: "Bebidas", icon: "🥤" },
-  { id: 7, name: "Pizzas", icon: "🍕" },
   { id: 8, name: "Hamburguesas", icon: "🍔" },
+  { id: 6, name: "Bebidas", icon: "🥤" },
+  { id: 1, name: "Café", icon: "☕" },
 ];
 
 const products: Product[] = [
@@ -20,7 +21,13 @@ const products: Product[] = [
   { id: 4, name: "Bombón", categoryId: 1, price: "260 CUP" },
 
   // Categoría: Té (ID: 2)
-  { id: 11, name: "Espaguetis", categoryId: 2 },
+  {
+    id: 11,
+    name: "Espaguetis Napolitano con Queso Gouda",
+    categoryId: 2,
+    price: "450 CUP",
+  },
+  { id: 12, name: "Lasaña", categoryId: 2, price: "450 CUP" },
 
   // Categoría: Sandwiches (ID: 4)
   {
@@ -57,6 +64,52 @@ const products: Product[] = [
     categoryId: 8,
     price: "1150 CUP",
   },
+  { id: 201, name: "Mariquitas de Plátanos", categoryId: 9, price: "120 CUP" },
+  { id: 202, name: "Malanga Frita", categoryId: 9, price: "180 CUP" },
+  { id: 203, name: "Frituras de Malanga", categoryId: 9, price: "300 CUP" },
+  { id: 204, name: "Croquetas de Jamón", categoryId: 9, price: "280 CUP" },
+  {
+    id: 205,
+    name: "Tostón de Jamón(4 Unidades)",
+    categoryId: 9,
+    price: "280 CUP",
+  },
+  {
+    id: 206,
+    name: "Tostón de Jamón(4 Unidades)",
+    categoryId: 9,
+    price: "280 CUP",
+  },
+  {
+    id: 207,
+    name: "Tostones Rellenos Mixtos(Atún y Jamón)",
+    categoryId: 9,
+    price: "320 CUP",
+  },
+  {
+    id: 208,
+    name: "Tostón de Atún(4 Unidades)",
+    categoryId: 9,
+    price: "350 CUP",
+  },
+  {
+    id: 209,
+    name: "Papas Prefritas",
+    categoryId: 9,
+    price: "450 CUP",
+  },
+  {
+    id: 210,
+    name: "Fajitas de Pollo",
+    categoryId: 9,
+    price: "500 CUP",
+  },
+  {
+    id: 211,
+    name: "Entremés(Jamón,queso,chorizo,aceitunas)",
+    categoryId: 9,
+    price: "540 CUP",
+  },
 ];
 
 const toppings = [
@@ -72,10 +125,8 @@ const toppings = [
 ];
 
 const spaghettiToppings = [
-  { id: 1, name: "Napolitano con Queso Gouda", price: "450 CUP" },
-  { id: 2, name: "Jamón", price: "540 CUP" },
-  { id: 3, name: "Atún", price: "620 CUP" },
-  { id: 4, name: "Lasaña", price: "1200 CUP" },
+  { id: 2, name: "Jamón", price: "90 CUP" },
+  { id: 3, name: "Atún", price: "170 CUP" },
 ];
 
 const takeawayProducts = [
@@ -88,8 +139,13 @@ const takeawayProducts = [
 ];
 
 const hamburgerToppings = [
-  { id: 10, name: "Queso Extra", price: "120 CUP" },
-  { id: 11, name: "Tocineta", price: "150 CUP" },
+  { id: 10, name: "Extra de Vegetales", price: "50 CUP" },
+  { id: 11, name: "Jamon(40g)", price: "100 CUP" },
+  { id: 12, name: "Chorizo(40g)", price: "120 CUP" },
+  { id: 13, name: "Salsa(40g)", price: "90 CUP" },
+  { id: 15, name: "Queso Gouda(40g)", price: "240 CUP" },
+  { id: 18, name: "Hamburguesa de Pollo", price: "270 CUP" },
+  { id: 16, name: "Hamburguesa de Cerdo", price: "300 CUP" },
 ];
 
 const App: React.FC = () => {
@@ -103,13 +159,13 @@ const App: React.FC = () => {
 
   // Determinar los toppings dinámicamente según la categoría seleccionada
   const currentToppings =
-  selectedCategoryId === 7
-    ? toppings
-    : selectedCategoryId === 2
-    ? spaghettiToppings
-    : selectedCategoryId === 8
-    ? hamburgerToppings
-    : null;
+    selectedCategoryId === 7
+      ? toppings
+      : selectedCategoryId === 2
+      ? spaghettiToppings
+      : selectedCategoryId === 8
+      ? hamburgerToppings
+      : null;
 
   const currentTakeawayProducts =
     selectedCategoryId === 7 ? takeawayProducts : [];
