@@ -27,7 +27,7 @@ const products: Product[] = [
     categoryId: 2,
     price: "450 CUP",
   },
-  { id: 12, name: "Lasaña", categoryId: 2, price: "450 CUP" },
+  { id: 12, name: "Lasaña", categoryId: 2, price: "1200 CUP" },
 
   // Categoría: Sandwiches (ID: 4)
   {
