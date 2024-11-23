@@ -3,8 +3,9 @@ import useSWR from "swr";
 import Hero from "./components/Hero";
 import Categories from "./components/Categories";
 import ProductList, { Product } from "./components/ProductList";
+import Loader from "./components/Loader";
 
-console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
+
 
 
 const fetcher = (url: string) =>
@@ -53,7 +54,7 @@ const App: React.FC = () => {
   if (categoriesError || productsError || toppingsError)
     return <div>Error al cargar datos del backend.</div>;
   if (!categories || !products || !toppings)
-    return <div>Cargando datos...</div>;
+    return <Loader/>
 
   return (
     <div className="w-full min-h-screen flex flex-col gap-6 bg-gray-100">

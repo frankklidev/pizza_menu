@@ -30,3 +30,24 @@
     transform: rotate(360deg);
   }
 }
+
+/* Animación personalizada */
+@layer utilities {
+  .animate-bounce {
+    animation: bounce 1.5s infinite ease-in-out;
+  }
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  .delay-400 {
+    animation-delay: 0.4s;
+  }
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
