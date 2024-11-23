@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from "react";
 
 export interface Product {
   id: number;
@@ -39,13 +39,13 @@ const ProductList: React.FC<ProductListProps> = ({
   const productsContainerRef = useRef<HTMLDivElement>(null); // Referencia al contenedor de productos
 
   // Detectar si el contenedor tiene scroll
-  const handleScroll = () => {
+  useEffect(() => {
     const container = productsContainerRef.current;
     if (container) {
       const hasScroll = container.scrollHeight > container.clientHeight;
       setIsScrollable(hasScroll);
     }
-  };
+  }, [filteredProducts, toppings, takeawayProducts]);
 
   return (
     <div className="w-full py-4">
@@ -53,8 +53,6 @@ const ProductList: React.FC<ProductListProps> = ({
       <div
         className="flex flex-col gap-4 px-4 max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
         ref={productsContainerRef}
-        onScroll={handleScroll}
-        onLoad={handleScroll}
       >
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
@@ -88,7 +86,6 @@ const ProductList: React.FC<ProductListProps> = ({
           <h3 className="text-lg font-bold mb-2">Agregos Disponibles:</h3>
           <div
             className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
-            onScroll={handleScroll} // Detectar scroll
           >
             {toppings.map((topping) => (
               <div
@@ -109,7 +106,6 @@ const ProductList: React.FC<ProductListProps> = ({
           <h3 className="text-lg font-bold mb-2">Para Llevar:</h3>
           <div
             className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
-            onScroll={handleScroll} 
           >
             {takeawayProducts.map((item) => (
               <div
