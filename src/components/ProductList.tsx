@@ -84,9 +84,7 @@ const ProductList: React.FC<ProductListProps> = ({
       {toppings && toppings.length > 0 && (
         <div className="mt-6 px-4">
           <h3 className="text-lg font-bold mb-2">Agregos Disponibles:</h3>
-          <div
-            className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
-          >
+          <div className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400">
             {toppings.map((topping) => (
               <div
                 key={topping.id}
@@ -104,9 +102,7 @@ const ProductList: React.FC<ProductListProps> = ({
       {currentCategoryId === 7 && takeawayProducts.length > 0 && (
         <div className="mt-6 px-4">
           <h3 className="text-lg font-bold mb-2">Para Llevar:</h3>
-          <div
-            className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400"
-          >
+          <div className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400">
             {takeawayProducts.map((item) => (
               <div
                 key={item.id}

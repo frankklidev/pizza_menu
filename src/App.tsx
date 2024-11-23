@@ -4,8 +4,14 @@ import Hero from "./components/Hero";
 import Categories from "./components/Categories";
 import ProductList, { Product } from "./components/ProductList";
 
+console.log('Backend URL:', import.meta.env.VITE_BACKEND_URL);
+
+
 const fetcher = (url: string) =>
-  fetch(`http://localhost:3000${url}`).then((res) => res.json());
+  fetch(`${import.meta.env.VITE_BACKEND_URL}${url}`).then((res) => res.json());
+
+
+
 
 const App: React.FC = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
