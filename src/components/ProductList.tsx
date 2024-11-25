@@ -5,6 +5,7 @@ export interface Product {
   name: string;
   categoryId: number; // Relaciona cada producto con una categoría
   price?: string; // Precio del producto
+  available?:boolean;
 }
 
 export interface Topping {

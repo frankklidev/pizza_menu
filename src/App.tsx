@@ -5,14 +5,8 @@ import Categories from "./components/Categories";
 import ProductList, { Product } from "./components/ProductList";
 import Loader from "./components/Loader";
 
-
-
-
 const fetcher = (url: string) =>
   fetch(`${import.meta.env.VITE_BACKEND_URL}${url}`).then((res) => res.json());
-
-
-
 
 const App: React.FC = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
@@ -32,13 +26,14 @@ const App: React.FC = () => {
     setSelectedCategoryId(categoryId);
   };
 
-  // Filtrar productos según la categoría seleccionada
+  // Filtrar productos según la categoría seleccionada y la propiedad available
   const filteredProducts =
     products && selectedCategoryId
       ? products.filter(
-          (product: Product) => product.categoryId === selectedCategoryId
+          (product: Product) =>
+            product.categoryId === selectedCategoryId && product.available
         )
-      : products;
+      : products?.filter((product: Product) => product.available);
 
   // Determinar los toppings dinámicamente según la categoría seleccionada
   const currentToppings =
@@ -53,10 +48,9 @@ const App: React.FC = () => {
   // Manejo de errores y estado de carga
   if (categoriesError || productsError || toppingsError)
     return <div>Error al cargar datos del backend.</div>;
-  if (!categories || !products || !toppings)
-    return <Loader/>
+  if (!categories || !products || !toppings) return <Loader />;
 
-  console.log("categories",categories)
+  console.log("categories", categories);
 
   return (
     <div className="w-full min-h-screen flex flex-col gap-6 bg-gray-100">
@@ -76,7 +70,7 @@ const App: React.FC = () => {
       {/* Product List Section */}
       <main className="w-full px-4 md:px-8 lg:px-12">
         <ProductList
-          products={filteredProducts} // Productos filtrados por categoría
+          products={filteredProducts} // Productos filtrados por categoría y disponibilidad
           selectedCategoryId={selectedCategoryId}
           defaultCategoryId={1}
           toppings={currentToppings} // Pasar los toppings dinámicamente
