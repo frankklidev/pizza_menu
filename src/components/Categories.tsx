@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from "react";
 
 interface Category {
   id: number;
@@ -11,7 +11,10 @@ interface CategoriesProps {
   onCategorySelect: (categoryId: number) => void;
 }
 
-const Categories: React.FC<CategoriesProps> = ({ categories, onCategorySelect }) => {
+const Categories: React.FC<CategoriesProps> = ({
+  categories,
+  onCategorySelect,
+}) => {
   const [isScrollableLeft, setIsScrollableLeft] = useState(false);
   const [isScrollableRight, setIsScrollableRight] = useState(false);
   const categoriesContainerRef = useRef<HTMLDivElement>(null);
@@ -32,13 +35,13 @@ const Categories: React.FC<CategoriesProps> = ({ categories, onCategorySelect })
   }, []);
 
   // Función para desplazar el contenedor horizontalmente
-  const scroll = (direction: 'left' | 'right') => {
+  const scroll = (direction: "left" | "right") => {
     const container = categoriesContainerRef.current;
     if (container) {
       const scrollAmount = 200; // Cantidad de desplazamiento
       container.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
       });
     }
   };
@@ -46,12 +49,12 @@ const Categories: React.FC<CategoriesProps> = ({ categories, onCategorySelect })
   return (
     <div className="relative w-full py-4">
       <h2 className="text-2xl font-bold mb-4 text-center">Categorías</h2>
-      
+
       {/* Flecha izquierda (visible solo en pantallas pequeñas) */}
       <button
-        onClick={() => scroll('left')}
+        onClick={() => scroll("left")}
         className={`absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 p-2 rounded-full shadow-md hover:bg-gray-300 transition-all lg:hidden ${
-          isScrollableLeft ? 'block' : 'hidden'
+          isScrollableLeft ? "block" : "hidden"
         }`}
       >
         <svg
@@ -61,7 +64,12 @@ const Categories: React.FC<CategoriesProps> = ({ categories, onCategorySelect })
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
 
@@ -71,14 +79,18 @@ const Categories: React.FC<CategoriesProps> = ({ categories, onCategorySelect })
         ref={categoriesContainerRef}
         onScroll={updateScrollIndicators} // Actualizar las flechas dinámicamente
       >
-        <div className="flex gap-4 pl-1"> {/* Espacio inicial en pantallas pequeñas */}
+        <div className="flex gap-4 pl-1">
+          {" "}
+          {/* Espacio inicial en pantallas pequeñas */}
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => onCategorySelect(category.id)}
               className="flex-shrink-0 flex flex-col items-center min-w-[100px] bg-base-200 rounded-lg p-4 shadow-md hover:bg-primary hover:text-white transition-all"
             >
-              <div className="text-4xl mb-2">{category.icon}</div>
+              <div className="text-4xl mb-2">
+                {category.icon || "❓"} {/* Icono predeterminado si falta */}
+              </div>
               <span className="text-sm font-medium">{category.name}</span>
             </button>
           ))}
@@ -87,9 +99,9 @@ const Categories: React.FC<CategoriesProps> = ({ categories, onCategorySelect })
 
       {/* Flecha derecha (visible solo en pantallas pequeñas) */}
       <button
-        onClick={() => scroll('right')}
+        onClick={() => scroll("right")}
         className={`absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 p-2 rounded-full shadow-md hover:bg-gray-300 transition-all lg:hidden ${
-          isScrollableRight ? 'block' : 'hidden'
+          isScrollableRight ? "block" : "hidden"
         }`}
       >
         <svg
@@ -99,7 +111,12 @@ const Categories: React.FC<CategoriesProps> = ({ categories, onCategorySelect })
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
     </div>
