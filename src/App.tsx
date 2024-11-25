@@ -72,7 +72,7 @@ const App: React.FC = () => {
         <ProductList
           products={filteredProducts} // Productos filtrados por categoría y disponibilidad
           selectedCategoryId={selectedCategoryId}
-          defaultCategoryId={1}
+          defaultCategoryId={9}
           toppings={currentToppings} // Pasar los toppings dinámicamente
         />
       </main>
