@@ -51,6 +51,7 @@ const App: React.FC = () => {
   if (!categories || !products || !toppings) return <Loader />;
 
   console.log("categories", categories);
+  console.log("filteredProducts", filteredProducts);
 
   return (
     <div className="w-full min-h-screen flex flex-col gap-6 bg-gray-100">

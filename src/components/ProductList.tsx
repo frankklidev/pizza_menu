@@ -36,6 +36,8 @@ const ProductList: React.FC<ProductListProps> = ({
     ? products.filter((product) => product.categoryId === currentCategoryId)
     : [];
 
+    console.log("products",filteredProducts)
+
   const [isScrollable, setIsScrollable] = useState(false); // Estado para indicar si hay más elementos desplazables
   const productsContainerRef = useRef<HTMLDivElement>(null); // Referencia al contenedor de productos
 
