@@ -5,7 +5,7 @@ export interface Product {
   name: string;
   categoryId: number; // Relaciona cada producto con una categoría
   price?: string; // Precio del producto
-  available?:boolean;
+  available?: boolean;
 }
 
 export interface Topping {
@@ -35,8 +35,6 @@ const ProductList: React.FC<ProductListProps> = ({
   const filteredProducts = currentCategoryId
     ? products.filter((product) => product.categoryId === currentCategoryId)
     : [];
-
-    console.log("products",filteredProducts)
 
   const [isScrollable, setIsScrollable] = useState(false); // Estado para indicar si hay más elementos desplazables
   const productsContainerRef = useRef<HTMLDivElement>(null); // Referencia al contenedor de productos
@@ -101,8 +99,8 @@ const ProductList: React.FC<ProductListProps> = ({
         </div>
       )}
 
-      {/* Mostrar productos "Para Llevar" si es la categoría de Pizzas */}
-      {currentCategoryId === 7 && takeawayProducts.length > 0 && (
+      {/* Mostrar productos "Para Llevar" si existen */}
+      {takeawayProducts && takeawayProducts.length > 0 && (
         <div className="mt-6 px-4">
           <h3 className="text-lg font-bold mb-2">Para Llevar:</h3>
           <div className="flex flex-col gap-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400">

@@ -36,22 +36,28 @@ const App: React.FC = () => {
       : products?.filter((product: Product) => product.available);
 
   // Determinar los toppings dinámicamente según la categoría seleccionada
+  const categoryToppingsMap: Record<number, string> = {
+    7: "toppings", // Categoría Pizzas
+    2: "spaghettiToppings", // Categoría Spaghetti
+    8: "hamburgerToppings", // Categoría Hamburguesas
+  };
+
+  // Obtener los toppings dinámicamente según la categoría seleccionada
   const currentToppings =
-    selectedCategoryId === 7
-      ? toppings?.toppings
-      : selectedCategoryId === 2
-      ? toppings?.spaghettiToppings
-      : selectedCategoryId === 8
-      ? toppings?.hamburgerToppings
+    selectedCategoryId && categoryToppingsMap[selectedCategoryId]
+      ? toppings?.[categoryToppingsMap[selectedCategoryId]]
       : [];
+
+  // Obtener los 'takeawayProducts' si la categoría seleccionada es Pizzas (ID 7)
+  const currentTakeawayProducts =
+    selectedCategoryId === 7 ? toppings?.takeawayProducts || [] : [];
 
   // Manejo de errores y estado de carga
   if (categoriesError || productsError || toppingsError)
     return <div>Error al cargar datos del backend.</div>;
   if (!categories || !products || !toppings) return <Loader />;
 
-  console.log("categories", categories);
-  console.log("filteredProducts", filteredProducts);
+
 
   return (
     <div className="w-full min-h-screen flex flex-col gap-6 bg-gray-100">
@@ -75,6 +81,7 @@ const App: React.FC = () => {
           selectedCategoryId={selectedCategoryId}
           defaultCategoryId={9}
           toppings={currentToppings} // Pasar los toppings dinámicamente
+          takeawayProducts={currentTakeawayProducts} // Pasar los productos para llevar
         />
       </main>
     </div>
